@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://Remittance/RFSHOWSTU/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://Remittance/RFSHOWSTU/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Version 2.0.150715</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://Remittance/RFSHOWSTU/">
+      <s:element name="TransactionStatusInquiry">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="bankCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="agentID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TransactionStatusInquiryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TransactionStatusInquiryResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VostroBalanceInquiry">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="bankCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="currencyCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="accountNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="agentCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VostroBalanceInquiryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VostroBalanceInquiryResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PosOnlTraAgt">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TM" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PosOnlTraAgtResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PosOnlTraAgtResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="TransactionStatusInquirySoapIn">
+    <wsdl:part name="parameters" element="tns:TransactionStatusInquiry" />
+  </wsdl:message>
+  <wsdl:message name="TransactionStatusInquirySoapOut">
+    <wsdl:part name="parameters" element="tns:TransactionStatusInquiryResponse" />
+  </wsdl:message>
+  <wsdl:message name="VostroBalanceInquirySoapIn">
+    <wsdl:part name="parameters" element="tns:VostroBalanceInquiry" />
+  </wsdl:message>
+  <wsdl:message name="VostroBalanceInquirySoapOut">
+    <wsdl:part name="parameters" element="tns:VostroBalanceInquiryResponse" />
+  </wsdl:message>
+  <wsdl:message name="PosOnlTraAgtSoapIn">
+    <wsdl:part name="parameters" element="tns:PosOnlTraAgt" />
+  </wsdl:message>
+  <wsdl:message name="PosOnlTraAgtSoapOut">
+    <wsdl:part name="parameters" element="tns:PosOnlTraAgtResponse" />
+  </wsdl:message>
+  <wsdl:message name="TransactionStatusInquiryHttpGetIn">
+    <wsdl:part name="referenceNumber" type="s:string" />
+    <wsdl:part name="bankCode" type="s:string" />
+    <wsdl:part name="agentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="TransactionStatusInquiryHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="VostroBalanceInquiryHttpGetIn">
+    <wsdl:part name="bankCode" type="s:string" />
+    <wsdl:part name="currencyCode" type="s:string" />
+    <wsdl:part name="accountNo" type="s:string" />
+    <wsdl:part name="agentCode" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VostroBalanceInquiryHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="PosOnlTraAgtHttpGetIn">
+    <wsdl:part name="TM" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PosOnlTraAgtHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="TransactionStatusInquiryHttpPostIn">
+    <wsdl:part name="referenceNumber" type="s:string" />
+    <wsdl:part name="bankCode" type="s:string" />
+    <wsdl:part name="agentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="TransactionStatusInquiryHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="VostroBalanceInquiryHttpPostIn">
+    <wsdl:part name="bankCode" type="s:string" />
+    <wsdl:part name="currencyCode" type="s:string" />
+    <wsdl:part name="accountNo" type="s:string" />
+    <wsdl:part name="agentCode" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VostroBalanceInquiryHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="PosOnlTraAgtHttpPostIn">
+    <wsdl:part name="TM" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PosOnlTraAgtHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="RFSWSHOTUSoap">
+    <wsdl:operation name="TransactionStatusInquiry">
+      <wsdl:input message="tns:TransactionStatusInquirySoapIn" />
+      <wsdl:output message="tns:TransactionStatusInquirySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VostroBalanceInquiry">
+      <wsdl:input message="tns:VostroBalanceInquirySoapIn" />
+      <wsdl:output message="tns:VostroBalanceInquirySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PosOnlTraAgt">
+      <wsdl:input message="tns:PosOnlTraAgtSoapIn" />
+      <wsdl:output message="tns:PosOnlTraAgtSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="RFSWSHOTUHttpGet">
+    <wsdl:operation name="TransactionStatusInquiry">
+      <wsdl:input message="tns:TransactionStatusInquiryHttpGetIn" />
+      <wsdl:output message="tns:TransactionStatusInquiryHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VostroBalanceInquiry">
+      <wsdl:input message="tns:VostroBalanceInquiryHttpGetIn" />
+      <wsdl:output message="tns:VostroBalanceInquiryHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PosOnlTraAgt">
+      <wsdl:input message="tns:PosOnlTraAgtHttpGetIn" />
+      <wsdl:output message="tns:PosOnlTraAgtHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="RFSWSHOTUHttpPost">
+    <wsdl:operation name="TransactionStatusInquiry">
+      <wsdl:input message="tns:TransactionStatusInquiryHttpPostIn" />
+      <wsdl:output message="tns:TransactionStatusInquiryHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VostroBalanceInquiry">
+      <wsdl:input message="tns:VostroBalanceInquiryHttpPostIn" />
+      <wsdl:output message="tns:VostroBalanceInquiryHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PosOnlTraAgt">
+      <wsdl:input message="tns:PosOnlTraAgtHttpPostIn" />
+      <wsdl:output message="tns:PosOnlTraAgtHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RFSWSHOTUSoap" type="tns:RFSWSHOTUSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TransactionStatusInquiry">
+      <soap:operation soapAction="http://Remittance/RFSHOWSTU/TransactionStatusInquiry" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VostroBalanceInquiry">
+      <soap:operation soapAction="http://Remittance/RFSHOWSTU/VostroBalanceInquiry" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PosOnlTraAgt">
+      <soap:operation soapAction="http://Remittance/RFSHOWSTU/PosOnlTraAgt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="RFSWSHOTUSoap12" type="tns:RFSWSHOTUSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="TransactionStatusInquiry">
+      <soap12:operation soapAction="http://Remittance/RFSHOWSTU/TransactionStatusInquiry" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VostroBalanceInquiry">
+      <soap12:operation soapAction="http://Remittance/RFSHOWSTU/VostroBalanceInquiry" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PosOnlTraAgt">
+      <soap12:operation soapAction="http://Remittance/RFSHOWSTU/PosOnlTraAgt" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="RFSWSHOTUHttpGet" type="tns:RFSWSHOTUHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="TransactionStatusInquiry">
+      <http:operation location="/TransactionStatusInquiry" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VostroBalanceInquiry">
+      <http:operation location="/VostroBalanceInquiry" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PosOnlTraAgt">
+      <http:operation location="/PosOnlTraAgt" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="RFSWSHOTUHttpPost" type="tns:RFSWSHOTUHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="TransactionStatusInquiry">
+      <http:operation location="/TransactionStatusInquiry" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VostroBalanceInquiry">
+      <http:operation location="/VostroBalanceInquiry" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PosOnlTraAgt">
+      <http:operation location="/PosOnlTraAgt" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RFSWSHOTU">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Version 2.0.150715</wsdl:documentation>
+    <wsdl:port name="RFSWSHOTUSoap" binding="tns:RFSWSHOTUSoap">
+      <soap:address location="http://sitxrsweb/rfshowstu/rfshows.asmx" />
+    </wsdl:port>
+    <wsdl:port name="RFSWSHOTUSoap12" binding="tns:RFSWSHOTUSoap12">
+      <soap12:address location="http://sitxrsweb/rfshowstu/rfshows.asmx" />
+    </wsdl:port>
+    <wsdl:port name="RFSWSHOTUHttpGet" binding="tns:RFSWSHOTUHttpGet">
+      <http:address location="http://sitxrsweb/rfshowstu/rfshows.asmx" />
+    </wsdl:port>
+    <wsdl:port name="RFSWSHOTUHttpPost" binding="tns:RFSWSHOTUHttpPost">
+      <http:address location="http://sitxrsweb/rfshowstu/rfshows.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
