@@ -13,7 +13,11 @@ const route = express();
 route.use(bodyParser.json());
 
 route.post('/', (req, res) => {
-  var body = _.pick(req.body, ['email', 'password']);
+  const body = _.pick(req.body, [
+    'firstName', 
+    'lastName', 
+    'email', 
+    'password']);
   const user = new User(body);
 
   user.save().then(() => {
