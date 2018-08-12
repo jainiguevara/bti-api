@@ -2,31 +2,32 @@ const {SHA256} = require('crypto-js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const password = 'abc123';
+// const password = 'abc123';
 
-// bcrypt.genSalt(10, (err, salt) => {
-//     bcrypt.hash(password, salt, (err, hash) => {
-//         console.log(hash);
-//     });
+// // bcrypt.genSalt(10, (err, salt) => {
+// //     bcrypt.hash(password, salt, (err, hash) => {
+// //         console.log(hash);
+// //     });
+// // });
+
+// const hashedPassword = '$2a$10$dc7usCGpOtZ5ESKdnBzdVOqVv0I6e78e.wM0k4QBnGcT1mtF4.7GS';
+
+// bcrypt.compare('password', hashedPassword, (err, res) => {
+//     console.log(res);
 // });
 
-const hashedPassword = '$2a$10$dc7usCGpOtZ5ESKdnBzdVOqVv0I6e78e.wM0k4QBnGcT1mtF4.7GS';
+const data  = {
+    id: 10,
+    h: 'hjggjhghjgjhghjgjh'
+};
 
-bcrypt.compare('password', hashedPassword, (err, res) => {
-    console.log(res);
-});
+const secret = 'las-pinas-#th3c00k`sS3#r%-tondo-manila';
 
-// const data  = {
-//     id: 10
-// };
+const token = jwt.sign(data, secret, { expiresIn: 10 });
+console.log(token);
 
-// const secret = 'las-pinas-#th3c00k`sS3#r%-tondo-manila';
-
-// const token = jwt.sign(data, secret);
-// console.log(token);
-
-// const decoded = jwt.verify(token, secret);
-// console.log('decoded', decoded);
+const decoded = jwt.verify(token, secret);
+console.log('decoded', decoded);
 
 //jwt.verify
 

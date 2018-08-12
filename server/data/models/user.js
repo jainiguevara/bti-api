@@ -36,25 +36,31 @@ const UserSchema = new mongoose.Schema({
 UserSchema.methods.toJSON = function () {
   const user = this;
   const userOject = user.toObject();
-  return _.pick(userOject, ['_id', 'email']);
+  try {
+    const decoded = jwt.verify(userOject.tokens[0].token, process.env.JWT_SECRET);
+    userOject.exp = decoded.exp; 
+  } catch (error) {
+    // do nothing
+  }
+  return _.pick(userOject, ['_id', 'email', 'tokens[0].token', 'exp' ]);
 };
 
 UserSchema.methods.generateAuthToken = function () {
   const user = this;
   const access = 'auth';
   const token = jwt.sign({ _id : user._id.toHexString(), access }, 
-    process.env.JWT_SECRET).toString();
+    process.env.JWT_SECRET, { expiresIn: '1h' }).toString();
   user.tokens = user.tokens.concat([{access, token}]);
   return user.save().then(() => {
     return token;
   });
 };
 
-UserSchema.methods.removeToken = function (token) {
+UserSchema.methods.removeTokens = function (access = 'auth') {
   const user = this;
   return user.update({
     $pull : {
-      tokens: { token }
+      tokens: { access }
     }
   });
 };
@@ -62,35 +68,34 @@ UserSchema.methods.removeToken = function (token) {
 UserSchema.statics.findByToken = function (token) {
   const User = this;
   let decoded;
-  
   try {
     decoded = jwt.verify(token, process.env.JWT_SECRET);    
   } catch (error) {
-    return Promise.reject();
+    const e = _.pick(error, [ 'name', 'message']);
+    console.log(e);
+    return Promise.reject(e);
   }
   return User.findOne({
-    '_id': decoded._id,
-    'tokens.token': token,
-    'tokens.access': 'auth'
+    '_id': decoded._id
   });
 };
 
 UserSchema.statics.findByCredentials = function (email, password) {
   const User = this;
-  return User.findOne({email}).then(user => {
-    if (!user) {
-      return Promise.reject();
+  return User.findOne({email}).then((user, error) => {
+    if (error) {
+      return Promise.reject(error);
     }
     return new Promise((resolve, reject) => {
       bcrypt.compare(password, user.password, (err, res) => {
         if (res) {
           resolve(user);
         } else {
-          reject();
+          reject(err);
         }
       });
     });
-});
+  });
 };
 
 UserSchema.pre('save', function(next) {
