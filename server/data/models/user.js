@@ -52,16 +52,16 @@ UserSchema.methods.toJSON = function () {
     const decoded = jwt.verify(userOject.tokens[0].token, process.env.JWT_SECRET);
     userOject.exp = decoded.exp; 
   } catch (error) {
-    // do nothing
+    userOject.exp = 0; 
   }
-  return _.pick(userOject, ['_id', 'email', 'tokens[0].token', 'exp' ]);
+  return _.pick(userOject, ['_id', 'email', 'tokens[0].token',  'exp' ]);
 };
 
 UserSchema.methods.generateAuthToken = function () {
   const user = this;
   const access = 'auth';
   const token = jwt.sign({ _id : user._id.toHexString(), access }, 
-    process.env.JWT_SECRET, { expiresIn: '1h' }).toString();
+    process.env.JWT_SECRET, { expiresIn: '3h' }).toString();
   user.tokens = user.tokens.concat([{access, token}]);
   return user.save().then(() => {
     return token;

@@ -52,7 +52,7 @@ route.get('/me/:id', authorize, (req, res) => {
   }).catch((e) => res.status(400).send(e));
 });
 
-route.get('/me', authenticate, (req, res) => {
+route.get('/me', authorize, (req, res) => {
   res.header('x-auth', req.token).send(req.user);
 });
 

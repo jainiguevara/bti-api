@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 
 module.exports.Transaction = mongoose.model('Transaction', {
-  ftReferenceNo: {
+  referenceNo: {
     type: String,
     required: true,
     unique: true,

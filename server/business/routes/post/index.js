@@ -12,6 +12,7 @@ const { User } = require('./../../../data/models/user');
 const { mongoose } = require('./../../../data/mongoose');
 const { Transaction } = require('../../../data/models/transaction');
 const { authenticate, authorize } = require('./../../services/middleware/authenticate');
+const { parseCBPayload, parseCBAuth } = require('./utils/parseCBPayload');
 
 const route = express();
 route.use(bodyParser.json());
@@ -31,7 +32,7 @@ route.post('/metrobank', authenticate, (req, res) => {
           result.map(record => {
             const newRecord = {
               _creator: req.body.userId,
-              ftReferenceNo: record.ftReferenceNo,
+              referenceNo: record.ftReferenceNo,
               data: JSON.stringify(record),
               raw: data[count].replace(/,/gi, '|'),
               bank: 'metrobank'
@@ -64,7 +65,7 @@ route.post('/metrobank', authenticate, (req, res) => {
           });
         });
     }); 
-    res.status(200).send({name: 'UploadInProgress', 'message': 'Transactions posting in-progress. Go to status table to check the progress.'})
+    res.status(200).send({name: 'UploadInProgress', 'message': 'Transactions posting in-progress. Go to status table to check the progress.'});
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
@@ -101,8 +102,71 @@ route.get('/metrobank', authenticate, (req, res) => {
   });
 });
 
+
+route.post('/chinabank', authenticate, (req, res) => {
+  try {
+    const args0 = parseCBAuth;
+    const { data } = req.body;
+    soap.createClient(__dirname + '\\remittance.wsdl', (err, client) => {
+      if (err) {
+        console.log(err);
+        res.status(400).send(err);
+      }
+      let count = 0;
+      csv()
+        .fromString(data)
+        .then(result => {
+          result.map(record => {
+            const args1 = parseCBPayload(record);
+            const newRecord = {
+              _creator: req.body.userId,
+              referenceNo: record.applicationNumber,
+              data: JSON.stringify(record),
+              raw: args1,
+              bank: 'chinabank'
+            };
+            console.log(newRecord);
+            saveToDB(newRecord)
+              .then((response) => {
+                console.log('CREATE_TRANSACTION_REQUESTED', response);
+                client.createTransaction({ args0, args1 }, (err, result) => {
+                  if (err) {
+                    console.log('createTransaction error', err);
+                  } else {
+                    console.log(result);
+                    // const soapResult = result.PosOnlTraAgtResult.split('|');
+                    // const updates = {
+                    //   _id: response._id,
+                    //   statusCode: soapResult[0],
+                    //   remarks: soapResult[1],
+                    //   completedAt: soapResult[2] && moment(soapResult[2], 'DDMMYYYY').valueOf(),
+                    //   completed: soapResult[2] && true
+                    // };
+                    // updateRecord(updates).then(response => {
+                    //   console.log('PosOnlTraAgtResult response', response);
+                    // });
+                  }
+                });
+              })
+              .catch(e => {
+                const messageBody = _.pick(e, [ 'name', 'message' ]);
+                console.log(messageBody);
+              });
+            count++;
+          });
+        });
+    }); 
+    res.status(200).send({name: 'UploadInProgress', 'message': 'Transactions posting in-progress. Go to status table to check the progress.'});
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
+
+
+
 const saveToDB = (record) => {
-  const body = _.pick(record, ['ftReferenceNo', 'data', 'raw', 'bank', '_creator']);
+  const body = _.pick(record, ['referenceNo', 'data', 'raw', 'bank', '_creator']);
   const trasaction = new Transaction(body);
   return trasaction.save();
 };
