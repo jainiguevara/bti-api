@@ -282,16 +282,16 @@
   <wsdl:service name="RFSWSHOTU">
     <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Version 2.0.150715</wsdl:documentation>
     <wsdl:port name="RFSWSHOTUSoap" binding="tns:RFSWSHOTUSoap">
-      <soap:address location="https://sitxrsweb/rfshowstu/rfshows.asmx" />
+      <soap:address location="http://sparkling-surf-2144.getsandbox.com/rfshowstu/rfshows.asmx" />
     </wsdl:port>
     <wsdl:port name="RFSWSHOTUSoap12" binding="tns:RFSWSHOTUSoap12">
-      <soap12:address location="https://sitxrsweb/rfshowstu/rfshows.asmx" />
+      <soap12:address location="http://sparkling-surf-2144.getsandbox.com/rfshowstu/rfshows.asmx" />
     </wsdl:port>
     <wsdl:port name="RFSWSHOTUHttpGet" binding="tns:RFSWSHOTUHttpGet">
-      <http:address location="https://sitxrsweb/rfshowstu/rfshows.asmx" />
+      <http:address location="http://sparkling-surf-2144.getsandbox.com/rfshowstu/rfshows.asmx" />
     </wsdl:port>
     <wsdl:port name="RFSWSHOTUHttpPost" binding="tns:RFSWSHOTUHttpPost">
-      <http:address location="https://sitxrsweb/rfshowstu/rfshows.asmx" />
+      <http:address location="http://sparkling-surf-2144.getsandbox.com/rfshowstu/rfshows.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

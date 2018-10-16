@@ -237,7 +237,7 @@
   </wsdl:binding>
   <wsdl:service name="CarnelianWebServiceRemittanceService">
     <wsdl:port name="CarnelianWebServiceRemittancePort" binding="tns:CarnelianWebServiceRemittanceServiceSoapBinding">
-      <soap:address location="https://172.20.180.116:10102/carnelian-web-service-server/cxf/remittance"/>
+      <soap:address location="http://crimson-hill-1206.getsandbox.com/CarnelianWebServiceRemittancePort"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

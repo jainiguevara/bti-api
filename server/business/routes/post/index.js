@@ -37,8 +37,8 @@ route.post('/metrobank', authenticate, (req, res) => {
               raw: data[count].replace(/,/gi, '|'),
               bank: 'metrobank'
             };
-            saveToDB(newRecord)
-              .then((response) => {
+            // saveToDB(newRecord)
+            //   .then((response) => {
                 client.PosOnlTraAgt({ TM: newRecord.raw }, (err, result) => {
                   if (err) {
                     console.log('PosOnlTraAgtResult error', err);
@@ -51,16 +51,16 @@ route.post('/metrobank', authenticate, (req, res) => {
                       completedAt: soapResult[2] && moment(soapResult[2], 'DDMMYYYY').valueOf(),
                       completed: soapResult[2] && true
                     };
-                    updateRecord(updates).then(response => {
-                      console.log('PosOnlTraAgtResult response', response);
-                    });
+                    // updateRecord(updates).then(response => {
+                    //   console.log('PosOnlTraAgtResult response', response);
+                    // });
                   }
                 });
-              })
-              .catch(e => {
-                const messageBody = _.pick(e, [ 'name', 'message' ]);
-                console.log(messageBody);
-              });
+              // })
+              // .catch(e => {
+              //   const messageBody = _.pick(e, [ 'name', 'message' ]);
+              //   console.log(messageBody);
+              // });
             count++;
           });
         });
@@ -105,7 +105,7 @@ route.get('/metrobank', authenticate, (req, res) => {
 
 route.post('/chinabank', authenticate, (req, res) => {
   try {
-    const args0 = parseCBAuth;
+    const args0 = parseCBAuth();
     const { data } = req.body;
     soap.createClient(__dirname + '\\remittance.wsdl', (err, client) => {
       if (err) {
@@ -122,16 +122,16 @@ route.post('/chinabank', authenticate, (req, res) => {
               _creator: req.body.userId,
               referenceNo: record.applicationNumber,
               data: JSON.stringify(record),
-              raw: args1,
+              raw: args0 + args1,
               bank: 'chinabank'
             };
-            console.log(newRecord);
-            saveToDB(newRecord)
-              .then((response) => {
-                console.log('CREATE_TRANSACTION_REQUESTED', response);
+            // saveToDB(newRecord)
+            //   .then((response) => {
+                // console.log('CREATE_TRANSACTION_REQUESTED', response);
+                console.log('CREATE_TRANSACTION_REQUESTED', newRecord);
                 client.createTransaction({ args0, args1 }, (err, result) => {
                   if (err) {
-                    console.log('createTransaction error', err);
+                    console.log('CREATE_TRANSACTION_REQUESTED_ERROR', err);
                   } else {
                     console.log(result);
                     // const soapResult = result.PosOnlTraAgtResult.split('|');
@@ -147,11 +147,11 @@ route.post('/chinabank', authenticate, (req, res) => {
                     // });
                   }
                 });
-              })
-              .catch(e => {
-                const messageBody = _.pick(e, [ 'name', 'message' ]);
-                console.log(messageBody);
-              });
+              // })
+              // .catch(e => {
+              //   const messageBody = _.pick(e, [ 'name', 'message' ]);
+              //   console.log(messageBody);
+              // });
             count++;
           });
         });
