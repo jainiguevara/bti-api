@@ -105,6 +105,7 @@ route.get('/metrobank', authenticate, (req, res) => {
 
 route.post('/chinabank', authenticate, (req, res) => {
   try {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     const args0 = parseCBAuth();
     const { data } = req.body;
     soap.createClient(__dirname + '\\remittance.wsdl', (err, client) => {
