@@ -118,12 +118,12 @@ route.post('/chinabank', authenticate, (req, res) => {
         .fromString(data)
         .then(result => {
           result.map(record => {
-            const args1 = parseCBPayload(record);
+            const args1 = record;// parseCBPayload(record);
             const newRecord = {
               _creator: req.body.userId,
               referenceNo: record.applicationNumber,
               data: JSON.stringify(record),
-              raw: args0 + args1,
+              raw: JSON.stringify({args0, args1}),
               bank: 'chinabank'
             };
             // saveToDB(newRecord)

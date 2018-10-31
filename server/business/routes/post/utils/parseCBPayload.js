@@ -1,22 +1,29 @@
 const xmlparser = require('js2xmlparser');
 
 const parseCBAuth = () => {
-  const args0 = {
-    username: {
-      // '@': {
-      //   'xsi:type' : 'xsd:string'
-      // },
-      '#': process.env.CB_USERNAME
-    },
-    password: {
-      // '@': {
-      //   'xsi:type' : 'xsd:string'
-      // },
-      '#': process.env.CB_PASSWORD
-    },
+  return {
+    username: process.env.CB_USERNAME,
+    password: process.env.CB_PASSWORD,
   };
-  return xmlparser.parse('args0', args0, { declaration: { include: false } });
 };
+
+// const parseCBAuth = () => {
+//   const args0 = {
+//     username: {
+//       // '@': {
+//       //   'xsi:type' : 'xsd:string'
+//       // },
+//       '#': process.env.CB_USERNAME
+//     },
+//     password: {
+//       // '@': {
+//       //   'xsi:type' : 'xsd:string'
+//       // },
+//       '#': process.env.CB_PASSWORD
+//     },
+//   };
+//   return xmlparser.parse('args0', args0, { declaration: { include: false } });
+// };
 
 const parseCBPayload = (payload = {}) => {
   const args1 = {
