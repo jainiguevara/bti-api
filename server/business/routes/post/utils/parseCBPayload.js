@@ -15,7 +15,7 @@ const parseCBAuth = () => {
       '#': process.env.CB_PASSWORD
     },
   };
-  return xmlparser.parse('args0', args0);
+  return xmlparser.parse('args0', args0, { declaration: { include: false } });
 };
 
 const parseCBPayload = (payload = {}) => {
@@ -495,7 +495,7 @@ const parseCBPayload = (payload = {}) => {
       '#': payload.individualCode ? payload.individualCode : ''
     }
   };
-  return xmlparser.parse('args1', args1);
+  return xmlparser.parse('args1', args1, { declaration: { include: false } });
 };
 
 module.exports = {
