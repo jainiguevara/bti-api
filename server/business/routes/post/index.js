@@ -106,7 +106,7 @@ route.get('/metrobank', authenticate, (req, res) => {
 route.post('/chinabank', authenticate, (req, res) => {
   try {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    const args0 = parseCBAuth();
+    const arg0 = parseCBAuth();
     const { data } = req.body;
     soap.createClient(__dirname + '\\remittance.wsdl', (err, client) => {
       if (err) {
@@ -118,19 +118,19 @@ route.post('/chinabank', authenticate, (req, res) => {
         .fromString(data)
         .then(result => {
           result.map(record => {
-            const args1 = record;// parseCBPayload(record);
+            const arg1 = record;// parseCBPayload(record);
             const newRecord = {
               _creator: req.body.userId,
               referenceNo: record.applicationNumber,
               data: JSON.stringify(record),
-              raw: JSON.stringify({args0, args1}),
+              raw: JSON.stringify({arg0, arg1}),
               bank: 'chinabank'
             };
             // saveToDB(newRecord)
             //   .then((response) => {
                 // console.log('CREATE_TRANSACTION_REQUESTED', response);
                 console.log('CREATE_TRANSACTION_REQUESTED', newRecord);
-                client.createTransaction({ args0, args1 }, (err, result) => {
+                client.createTransaction({ arg0, arg1 }, (err, result) => {
                   if (err) {
                     console.log('CREATE_TRANSACTION_REQUESTED_ERROR', err);
                   } else {
