@@ -134,7 +134,7 @@ route.post('/chinabank', authenticate, (req, res) => {
                   if (err) {
                     console.log('CREATE_TRANSACTION_REQUESTED_ERROR', err);
                   } else {
-                    console.log(result);
+                    console.log(JSON.stringify(result));
                     // const soapResult = result.PosOnlTraAgtResult.split('|');
                     // const updates = {
                     //   _id: response._id,
