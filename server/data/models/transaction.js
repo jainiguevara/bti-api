@@ -54,4 +54,19 @@ module.exports.Transaction = mongoose.model('Transaction', {
     trim: true,
     default: 'Uploaded'
   },
+  cb_coverNumber: {
+    type: String,
+    minlength: 1,
+    trim: true,
+  },
+  cb_errorCode: {
+    type: String,
+    minlength: 1,
+    trim: true
+  },
+  cb_errorMessage: {
+    type: String,
+    minlength: 1,
+    trim: true
+  }
 });

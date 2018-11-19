@@ -1,0 +1,5 @@
+{"return":{"errorMessageResponseList":[{"errorCode":"099","errorMessage":"No Errors"}],"remittanceResponseList":{"coverNumber":"WS_BTIEX_0000000004","errorMessage":"","isError":0,"noOfTransactions":1,"totalAmountReceived":"1000.0"}}}
+
+{"return":{"errorMessageResponseList":[{"errorCode":"015","errorMessage":"No service code defined for the specified foreign office"}],"remittanceResponseList":{"coverNumber":"WS_BTIEX_0000000003","errorMessage":"","isError":1,"noOfTransactions":0,"totalAmountReceived":"0.0"}}}
+
+{"return":{"errorMessageResponseList":[{"errorCode":"042","errorMessage":"The Foreign Office is unauthorized to access the web service"}],"remittanceResponseList":{"noOfTransactions":0,"totalAmountReceived":"0.0"}}}
