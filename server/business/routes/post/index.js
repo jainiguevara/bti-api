@@ -131,7 +131,7 @@ route.post('/chinabank', authenticate, (req, res) => {
             console.log('CREATE_TRANSACTION_REQUESTED', newRecord);
             saveToDB(newRecord)
               .then((response) => {
-                console.log('CREATE_TRANSACTION_REPONSE', response);
+                console.log('CREATE_TRANSACTION_RESPONSE', response);
                 client.createTransaction({ arg0, arg1 }, (err, result) => {
                   if (err) {
                     console.log('CREATE_TRANSACTION_REQUESTED_ERROR', err);
@@ -151,7 +151,7 @@ route.post('/chinabank', authenticate, (req, res) => {
                       cb_errorMessage: errorCode !== '099' ? errorMessage: '',
                     };
                     updateRecord(updates).then(response => {
-                      console.log('UPDATE_TRANSACTION_REPONSE', response);
+                      console.log('UPDATE_TRANSACTION_RESPONSE', response);
                     });
                   }
                 });
@@ -164,7 +164,7 @@ route.post('/chinabank', authenticate, (req, res) => {
           });
         });
     }); 
-    res.status(200).send({name: 'UploadInProgress', 'message': 'Transactions posting in-progress. Go to status table to check the progress.'});
+    res.status(200).send({ name: 'UploadInProgress', 'message': 'Transactions posting in-progress. Go to status table to check the progress.' });
   } catch (error) {
     console.log(error);
     res.status(400).send(error);
@@ -193,7 +193,6 @@ route.get('/chinabank', authenticate, (req, res) => {
       console.log(err);
       res.status(400).send(err);
     }
-
     // get transaction status here
     soap.createClient(__dirname + process.env.CB_WSDL, (err, client) => {
       if (err) {
@@ -208,16 +207,18 @@ route.get('/chinabank', authenticate, (req, res) => {
         // coverNo: result.cb_coverNumber,
         // applicationNo: result.referenceNo,
       };
-      client.inquireTransaction({ arg0 }, (err, result) => {
+      client.inquireTransaction({ arg0 }, (err, reponse) => {
         if (err) {
           console.log(err);
           res.status(400).send(err);
         }
-        console.log('inquireTransaction', result)
+        console.log('inquireTransaction', reponse)
+
+        // insert update transaction logic here
+        res.status(200).send(result);
       });
     });
     //
-    res.status(200).send(result);
   }).catch(e => {
     const messageBody = _.pick(e, [ 'name', 'message' ]);
     console.log(messageBody);
