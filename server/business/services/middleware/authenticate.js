@@ -19,7 +19,6 @@ const authenticate = (req, res, next) => {
     if (!user) {
       return Promise.reject(errorMessages[1]);
     }
-    // console.log(user, token);
     req.user = user;
     req.token = token;
     next();
@@ -35,7 +34,7 @@ const authorize = (req, res, next) => {
   });
 };
 
-const performAuthorization = (serverToken) => {
+const performAuthorization = serverToken => {
   const token = serverToken.split(' ')[1];
   return Auth.findByToken(token).then(auth => {
     if (!auth) {

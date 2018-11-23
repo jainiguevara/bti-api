@@ -19,7 +19,7 @@ route.post('/', authorize, (req, res) => {
   user.save().then(() => {
     res.send(user);
   }).catch((e) => {
-    console.log(_.pick(e, [ 'name', 'message' ]));
+    console.log('SAVE_USER_ERROR', _.pick(e, [ 'name', 'message' ]));
     res.status(400).send({ name: 'DuplicateEmailError', message: 'Duplicate email address.'});
   });
 });
@@ -34,7 +34,7 @@ route.post('/login', authorize, (req, res) => {
       res.header('x-auth', token).send(user);
     });
   }).catch(e => {
-    console.log(e);
+    console.log('LOGIN_ERROR', e);
     res.status(400).send(e);
   });
 });
@@ -58,10 +58,19 @@ route.get('/me', authorize, (req, res) => {
 
 
 
-route.delete('/me/token', authenticate, (req, res) => {
-  req.user.removeTokens().then(() => {
+route.post('/me/token', authorize, (req, res) => {
+  const token = req.header('x-auth');
+  let user;
+  User.findByToken(token).then(u => {
+    user = u;
+    return user.removeTokens();
+  }).then(() => {
+    console.log('LOGOUT_SUCCESS', user.email);
     res.status(200).send();
-  }).catch(e => res.status(400).send(e));
+  }).catch(e => {
+    console.log('LOGOUT_ERROR', e);
+    res.status(400).send(e);
+  });
 });
 
 module.exports = route;
